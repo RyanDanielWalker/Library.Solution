@@ -1,0 +1,17 @@
+book <- book type/category
+title
+genre
+connection copies
+
+author
+name
+connection to book
+
+copies <- actual book, with some serial number
+due date
+checkout date
+serial number == id
+connection for who checked it out
+condition
+
+patron = aspnetuser table?
