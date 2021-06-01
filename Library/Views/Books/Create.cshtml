@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Book
+
+<h1>Add a new book</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model => model.Title)
+  @Html.TextBoxFor(model => model.Title, new {required = "required"})
+  <br>
+  @Html.LabelFor(model => model.Genre)
+  @Html.TextBoxFor(model => model.Genre)
+
+  <!-- @Html.Partial("~/Views/Authors/_AuthorsFormPartial.cshtml") -->
+  @Html.Label("Select Author")
+  @Html.DropDownList("AuthorId")
+
+  <input type="submit" value="Add Book" class="btn btn-default" />
+}
