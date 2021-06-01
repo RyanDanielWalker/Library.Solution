@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Book
+
+<h1>Are you sure you want to delete @Model.Title?</h1>
+
+@using (Html.BeginForm())
+{
+  <input type="submit" value="Delete Book" class="btn btn-danger btn-lg" />
+}
+
+@Html.ActionLink("Back to Book List", "Index")

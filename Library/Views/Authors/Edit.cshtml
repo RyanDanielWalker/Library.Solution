@@ -1,0 +1,18 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Author
+
+<h4>Edit Author - @Model.FirstName @Model.LastName</h4>
+@using (Html.BeingForm())
+{
+  @Html.HiddenFor(model => model.AuthorId)
+
+  @Html.LabelFor(model => model.FirstName)
+  @Html.TextBoxFor(model => model.FirstName)
+  @Html.LabelFor(model => model.LastName)
+  @Html.TextBoxFor(model => model.LastName)
+  <input type="submit" vaule="Save" class="btn btn-success" />
+}
+@Html.ActionLink("Show all Authors", "Index")

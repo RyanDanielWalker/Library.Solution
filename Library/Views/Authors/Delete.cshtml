@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Author
+
+<h1>Are you sure you want to delete @Model.FirstName @Model.LastName?</h1>
+
+@using (Html.BeginForm())
+{
+  <input type="submit" value="Delete Author" class="btn btn-danger btn-lg" />
+}
+
+@Html.ActionLink("Back to Author List", "Index")
