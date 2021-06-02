@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Copy
+
+<h1>Are you sure you want to delete Copy of @Model.Book.Title?</h1>
+
+@using (Html.BeginForm())
+{
+  <input type="submit" value="Delete Copy" class="btn btn-danger btn-lg" />
+}
+
+@Html.ActionLink("Back to Copy List", "Index")

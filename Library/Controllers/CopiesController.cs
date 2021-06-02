@@ -47,6 +47,7 @@ namespace Library.Models
     public ActionResult Details(int id)
     {
       var thisCopy = _db.Copies
+          .Include(copy => copy.Book)
           .Include(copy => copy.CopyPatronJoinEntities)
           .ThenInclude(join => join.Patron)
           .FirstOrDefault(copy => copy.CopyId == id);
@@ -54,7 +55,9 @@ namespace Library.Models
     }
     public ActionResult Edit(int id)
     {
-      var thisCopy = _db.Copies.FirstOrDefault(copy => copy.CopyId == id);
+      var thisCopy = _db.Copies
+        .Include(copy => copy.Book)
+        .FirstOrDefault(copy => copy.CopyId == id);
       ViewBag.BookId = new SelectList(_db.Books, "BookId", "Title");
       return View(thisCopy);
     }
@@ -68,7 +71,9 @@ namespace Library.Models
 
     public ActionResult AddUser(int id)
     {
-      var thisCopy = _db.Copies.FirstOrDefault(copy => copy.CopyId == id);
+      var thisCopy = _db.Copies
+        .Include(copy => copy.Book)
+        .FirstOrDefault(copy => copy.CopyId == id);
       ViewBag.UserId = new SelectList(_userManager.Users, "Id", "UserName");
       return View(thisCopy);
     }
@@ -86,14 +91,18 @@ namespace Library.Models
 
     public ActionResult Delete(int id)
     {
-      var thisCopy = _db.Copies.FirstOrDefault(copy => copy.CopyId == id);
+      var thisCopy = _db.Copies
+        .Include(copy => copy.Book)
+        .FirstOrDefault(copy => copy.CopyId == id);
       return View(thisCopy);
     }
 
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
-      var thisCopy = _db.Copies.FirstOrDefault(copy => copy.CopyId == id);
+      var thisCopy = _db.Copies
+        .Include(copy => copy.Book)
+        .FirstOrDefault(copy => copy.CopyId == id);
       _db.Copies.Remove(thisCopy);
       _db.SaveChanges();
       return RedirectToAction("Index");

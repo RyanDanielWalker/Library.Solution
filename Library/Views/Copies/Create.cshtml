@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Copy
+
+<h1>Add a new copy of a book</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.Label("Select Book")
+  @Html.DropDownList("BookId")
+
+  @Html.LabelFor(model => model.Condition)
+  @Html.TextBoxFor(model => model.Condition, new {required = "required"})
+
+  @Html.Label("Currently Checked Out")
+  @Html.CheckBoxFor(model => model.IsCheckedOut)
+
+  <input type="submit" value="Add Copy" class="btn btn-default" />
+}

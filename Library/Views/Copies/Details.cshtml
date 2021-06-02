@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Copy
+
+<h2>@Html.DisplayFor(model => model.Book.Title) Copy</h2>
+
+@if (@Model.CopyPatronJoinEntities.Count == 0)
+{
+  <p>This copy has not been checked out.</p>
+}
+else
+{
+  <h4>Checked Out By:</h4>
+  <h4>@Model.User.UserName</h4>
+}
+
+<p>@Html.ActionLink("Add Patron", "AddUser", new {id = Model.CopyId})</p>
+<p>@Html.ActionLink("Back to All Copies", "Index")</p>
+<p>@Html.ActionLink("Edit Copy Information", "Edit", new {id = Model.CopyId})</p>
+<p>@Html.ActionLink("Delete Copy", "Delete", new {id = Model.CopyId})</p>

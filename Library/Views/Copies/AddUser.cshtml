@@ -1,0 +1,18 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Copy
+
+<h1>Add User to @Model.Book.Title Copy</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.CopyId)
+
+  @Html.Label("Select Patron")
+  @Html.DropDownList("UserId")
+
+  <input type="submit" value="Add Patron" />
+}
+<p>@Html.ActionLink("Back to Copies", "Index")</p>
