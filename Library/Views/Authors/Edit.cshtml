@@ -5,7 +5,7 @@
 @model Library.Models.Author
 
 <h4>Edit Author - @Model.FirstName @Model.LastName</h4>
-@using (Html.BeingForm())
+@using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.AuthorId)
 

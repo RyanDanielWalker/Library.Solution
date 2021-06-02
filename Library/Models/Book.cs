@@ -10,6 +10,7 @@ namespace Library.Models
 
     public virtual ICollection<AuthorBook> AuthorBookJoinEntities { get; }
     public virtual ICollection<Copy> Copies { get; set; }
+    // public virtual ApplicationUser User { get; set; }
 
     public Book()
     {

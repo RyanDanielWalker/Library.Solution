@@ -15,19 +15,16 @@ namespace Library.Models
   public class BooksController : Controller
   {
     private readonly LibraryContext _db;
-    private readonly UserManager<ApplicationUser> _userManager;
+    // private readonly UserManager<ApplicationUser> _userManager;
     public BooksController(UserManager<ApplicationUser> userManager, LibraryContext db)
     {
-      _userManager = userManager;
+      // _userManager = userManager;
       _db = db;
     }
     [AllowAnonymous]
-    public async Task<ActionResult> Index()
+    public ActionResult Index()
     {
-      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      var currentUser = await _userManager.FindByIdAsync(userId);
-      var userBooks = _db.Books.Where(entry => entry.User.Id == currentUser.Id).ToList();
-      return View(userBooks);
+      return View(_db.Books.ToList());
     }
 
     public ActionResult Create()
@@ -37,10 +34,10 @@ namespace Library.Models
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(Book book, int authorId)
+    public ActionResult Create(Book book, int authorId)
     {
-      var userId = this._userManager.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      var currentUser = await _userManager.FindByIdAsync(userId);
+      // var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      // var currentUser = await _userManager.FindByIdAsync(userId);
       // bool authorExists = _db.Authors
       //   .Any(entry => entry.FirstName == author.FirstName && entry.LastName == author.LastName);
       // if (!authorExists)
@@ -53,6 +50,7 @@ namespace Library.Models
       //   Author selectedAuthor = _db.Authors
       //     .FirstOrDefault(entry => entry.FirstName == author.FirstName && entry.LastName == author.LastName);
       // }
+      // book.User = currentUser;
       _db.Books.Add(book);
       _db.SaveChanges();
       if (authorId != 0)
@@ -66,10 +64,10 @@ namespace Library.Models
     public ActionResult Details(int id)
     {
       var thisBook = _db.Books
-          .Includes(book => book.JoinEntities)
-          .ThenIncludes(join => join.Author)
+          .Include(book => book.AuthorBookJoinEntities)
+          .ThenInclude(join => join.Author)
           .FirstOrDefault(book => book.BookId == id);
-      return (thisBook);
+      return View(thisBook);
     }
     public ActionResult Edit(int id)
     {

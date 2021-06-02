@@ -14,7 +14,7 @@ else
 {
   <h4>Authors of this book</h4>
   <ul>
-  @foreach (var join in Module.AuthorBookJoinEntities)
+  @foreach (var join in Model.AuthorBookJoinEntities)
     {
       <li>@join.Author.FirstName @join.Author.LastName</li>
       @using (Html.BeginForm("DeleteAuthor", "Books"))
@@ -27,9 +27,6 @@ else
 }
 
 <p>@Html.ActionLink("Add Author", "AddAuthor", new {id = Model.BookId})</p>
-
 <p>@Html.ActionLink("Back to All Books", "Index")</p>
-
 <p>@Html.ActionLink("Edit Book Information", "Edit", new {id = Model.BookId})</p>
-
 <p>@Html.ActionLink("Delete Book", "Delete", new {id = Model.BookId})</p>

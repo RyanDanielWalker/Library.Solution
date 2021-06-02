@@ -5,7 +5,7 @@
 @model Library.Models.Author
 
 <h4>Add new Author</h4>
-@using (Html.BeingForm())
+@using (Html.BeginForm())
 {
   @Html.LabelFor(model => model.FirstName)
   @Html.TextBoxFor(model => model.FirstName)

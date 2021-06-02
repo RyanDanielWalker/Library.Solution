@@ -1,3 +1,5 @@
+using System;
+
 namespace Library.Models
 {
   public class CopyPatron
