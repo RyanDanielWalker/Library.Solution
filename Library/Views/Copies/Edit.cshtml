@@ -19,7 +19,10 @@
   @Html.Label("Currently Checked Out")
   @Html.CheckBoxFor(model => model.IsCheckedOut)
 
-  <input type="submit" value="Add Copy" class="btn btn-default" />
+  @Html.Label("Checked Out To")
+  @Html.DropDownList("UserId", "-select-")
+
+  <input type="submit" value="Save" class="btn btn-default" />
 }
 
 <p>@Html.ActionLink("Back to All Books", "Index")</p>

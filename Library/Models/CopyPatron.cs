@@ -6,7 +6,7 @@ namespace Library.Models
   {
     public int CopyPatronId { get; set; }
     public int CopyId { get; set; }
-    public int PatronId { get; set; }
+    public string PatronId { get; set; }
 
     public DateTime CheckoutDate { get; set; }
     public DateTime DueDate { get; set; }

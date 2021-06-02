@@ -23,8 +23,16 @@ else
         <input type="submit" value="Delete" class="btn btn-danger btn-sm" />
       }
     }
+
   </ul>
 }
+<h4>Copies available for this book</h4>
+<ul>
+  @foreach (var copy in Model.Copies)
+  {
+    <li>@Html.ActionLink($"{copy.Book.Title}", "Details", "Copies", new {id = copy.CopyId}) | @copy.IsCheckedOut</li>
+  }
+</ul>
 
 <p>@Html.ActionLink("Add Author", "AddAuthor", new {id = Model.BookId})</p>
 <p>@Html.ActionLink("Back to All Books", "Index")</p>

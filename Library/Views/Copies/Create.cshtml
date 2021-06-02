@@ -17,5 +17,8 @@
   @Html.Label("Currently Checked Out")
   @Html.CheckBoxFor(model => model.IsCheckedOut)
 
+  @Html.Label("Checked Out To")
+  @Html.DropDownList("UserId", "-select-")
+
   <input type="submit" value="Add Copy" class="btn btn-default" />
 }

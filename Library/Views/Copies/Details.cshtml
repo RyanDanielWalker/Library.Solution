@@ -13,7 +13,11 @@
 else
 {
   <h4>Checked Out By:</h4>
-  <h4>@Model.User.UserName</h4>
+  @foreach (var join in Model.CopyPatronJoinEntities)
+  {
+    <li>@join.Patron.UserName</li>
+  }
+  @* <!-- <h4>@Model.CopyPatronJoinEntities.Patron.UserName</h4> --> *@
 }
 
 <p>@Html.ActionLink("Add Patron", "AddUser", new {id = Model.CopyId})</p>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System;
 
 namespace Library.Models
 {
@@ -28,28 +29,38 @@ namespace Library.Models
       var currentUser = await _userManager.FindByIdAsync(userId);
       var userCopies = _db.Copies.Where(entry => entry.User.Id == currentUser.Id).ToList();
       return View(userCopies);
+      // var allCopies = _db.Copies.Include(copy => copy.User).ToList();
+      // return View(allCopies);
     }
 
     public ActionResult Create()
     {
       ViewBag.BookId = new SelectList(_db.Books, "BookId", "Title");
+      ViewBag.UserId = new SelectList(_userManager.Users, "Id", "UserName");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Copy copy)
+    public async Task<ActionResult> Create(Copy copy, string UserId)
     {
+      var selectedUser = await _userManager.FindByIdAsync(UserId);
+      copy.User = selectedUser;
       _db.Copies.Add(copy);
       _db.SaveChanges();
+      if (UserId != null)
+      {
+        _db.CopyPatron.Add(new CopyPatron() { CopyId = copy.CopyId, PatronId = UserId });
+        _db.SaveChanges();
+      }
       return RedirectToAction("Index");
     }
     [AllowAnonymous]
     public ActionResult Details(int id)
     {
       var thisCopy = _db.Copies
-          .Include(copy => copy.Book)
           .Include(copy => copy.CopyPatronJoinEntities)
           .ThenInclude(join => join.Patron)
+          .Include(copy => copy.Book)
           .FirstOrDefault(copy => copy.CopyId == id);
       return View(thisCopy);
     }
@@ -59,11 +70,14 @@ namespace Library.Models
         .Include(copy => copy.Book)
         .FirstOrDefault(copy => copy.CopyId == id);
       ViewBag.BookId = new SelectList(_db.Books, "BookId", "Title");
+      ViewBag.UserId = new SelectList(_userManager.Users, "Id", "UserName");
       return View(thisCopy);
     }
     [HttpPost]
-    public ActionResult Edit(Copy copy)
+    public async Task<ActionResult> Edit(Copy copy, string UserId)
     {
+      var selectedUser = await _userManager.FindByIdAsync(UserId);
+      copy.User = selectedUser;
       _db.Entry(copy).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
@@ -79,9 +93,11 @@ namespace Library.Models
     }
 
     [HttpPost]
-    public ActionResult AddUser(Copy copy, int UserId)
+    public async Task<ActionResult> AddUser(Copy copy, string UserId)
     {
-      if (UserId != 0)
+      var selectedUser = await _userManager.FindByIdAsync(UserId);
+      copy.User = selectedUser;
+      if (UserId != null)
       {
         _db.CopyPatron.Add(new CopyPatron() { CopyId = copy.CopyId, PatronId = UserId });
       }
