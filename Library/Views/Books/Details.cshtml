@@ -1,7 +1,7 @@
 @{
   Layout = "_Layout";
 }
-
+@using Library.Models
 @model Library.Models.Book
 
 <h2>@Html.DisplayFor(model => model.Title)</h2>
@@ -45,6 +45,18 @@ else
     }
 
   </ul>
+}
+
+<p>Previously Checked Out:</p>
+@foreach (Copy copy in Model.Copies)
+{
+  @foreach (CopyPatron join in copy.CopyPatronJoinEntities)
+  {
+    @if (join.PatronId == @ViewBag.UserId)
+    {
+      <li>@join.CheckoutDate.ToString("MMM dd, yyyy") </li>
+    }
+  }
 }
 
 <p>@Html.ActionLink("Add Author", "AddAuthor", new {id = Model.BookId})</p>

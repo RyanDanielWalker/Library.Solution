@@ -92,6 +92,7 @@ namespace Library.Models
         .Include(copy => copy.Book)
         .FirstOrDefault(copy => copy.CopyId == id);
       ViewBag.UserId = new SelectList(_userManager.Users, "Id", "UserName");
+      ViewBag.dateCheckedOut = DateTime.Today;
       return View(thisCopy);
     }
 

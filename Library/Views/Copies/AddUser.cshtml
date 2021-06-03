@@ -18,9 +18,7 @@
   @Html.DropDownList("UserId")
 
   @Html.Label("Date Checked Out")
-  @Html.TextBox("dateCheckedOut", "{0:MM/dd/yyyy}" ,new {type="date", required="required"})
-
-
+  @Html.TextBox("dateCheckedOut", "{0:MM/dd/yyyy}", new {type="date", required="required"})
 
   <input type="submit" value="Add Patron" />
 }

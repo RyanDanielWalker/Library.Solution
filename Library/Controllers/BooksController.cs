@@ -97,6 +97,9 @@ namespace Library.Models
       {
         ViewBag.AreCopiesAvailable = true;
       }
+
+      ViewBag.UserId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
       return View(thisBook);
     }
     public ActionResult Edit(int id)

@@ -12,10 +12,10 @@
 }
 else
 {
-  <h4>Checked Out By:</h4>
+  <h4>Check Out History:</h4>
   @foreach (var join in Model.CopyPatronJoinEntities)
   {
-    <li>@join.Patron.UserName</li>
+    <li>@join.Patron.UserName | Checked Out On: @join.CheckoutDate.ToString("MMM dd, yyyy")</li>
   }
   @* <!-- <h4>@Model.CopyPatronJoinEntities.Patron.UserName</h4> --> *@
 }
@@ -28,7 +28,7 @@ else
   }
 }
 
-<p>@Html.ActionLink("Add Patron", "AddUser", new {id = Model.CopyId})</p>
+<p>@Html.ActionLink("Checkout Book", "AddUser", new {id = Model.CopyId})</p>
 <p>@Html.ActionLink("Back to All Copies", "Index")</p>
 <p>@Html.ActionLink("Edit Copy Information", "Edit", new {id = Model.CopyId})</p>
 <p>@Html.ActionLink("Delete Copy", "Delete", new {id = Model.CopyId})</p>

@@ -8,3 +8,16 @@ div#footer {
   padding:8px;
   text-align: start;
 }
+
+.card {
+  margin: 30px;
+  padding: 30px;
+  border-radius: 25px;
+  min-height: 85vh;
+  background-color: #EEEEEE;
+}
+
+h1, h2, h3{
+  text-align: center;
+}
+
