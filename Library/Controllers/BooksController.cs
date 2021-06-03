@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System;
 
 namespace Library.Models
 {
@@ -21,10 +22,21 @@ namespace Library.Models
       // _userManager = userManager;
       _db = db;
     }
-    [AllowAnonymous]
-    public ActionResult Index()
+    // [AllowAnonymous]
+    // public ActionResult Index()
+    // {
+    //   return View(_db.Books.ToList());
+    // }
+
+    public async Task<ActionResult> Index(string searchString)
     {
-      return View(_db.Books.ToList());
+      var books = from b in _db.Books
+                  select b;
+      if (!String.IsNullOrEmpty(searchString))
+      {
+        books = books.Where(s => s.Title.Contains(searchString));
+      }
+      return View(await books.ToListAsync());
     }
 
     public ActionResult Create()

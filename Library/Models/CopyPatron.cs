@@ -9,6 +9,7 @@ namespace Library.Models
     public string PatronId { get; set; }
     public DateTime CheckoutDate { get; set; }
     public DateTime DueDate { get; set; }
+    public DateTime ReturnedDate { get; set; }
     public bool HasBeenReturned { get; set; }
 
     public virtual Copy Copy { get; set; }

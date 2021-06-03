@@ -128,11 +128,31 @@ namespace Library.Models
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
     [HttpPost]
     public ActionResult DeleteUser(int joinId)
     {
       var joinEntry = _db.CopyPatron.FirstOrDefault(entry => entry.CopyPatronId == joinId);
       _db.CopyPatron.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost, ActionName("Details")]
+    public ActionResult ReturnCopy(int id)
+    {
+      var thisCopy = _db.Copies
+        .Include(copy => copy.CopyPatronJoinEntities)
+        .ThenInclude(join => join.Patron)
+        .FirstOrDefault(copy => copy.CopyId == id);
+      thisCopy.User = null;
+      thisCopy.IsCheckedOut = false;
+      _db.Entry(thisCopy).State = EntityState.Modified;
+
+      CopyPatron joinEntry = thisCopy.CopyPatronJoinEntities.ElementAt(thisCopy.CopyPatronJoinEntities.Count - 1);
+      joinEntry.HasBeenReturned = true;
+      _db.Entry(joinEntry).State = EntityState.Modified;
+
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

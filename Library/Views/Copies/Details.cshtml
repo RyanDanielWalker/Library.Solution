@@ -20,6 +20,14 @@ else
   @* <!-- <h4>@Model.CopyPatronJoinEntities.Patron.UserName</h4> --> *@
 }
 
+@if (@Model.IsCheckedOut)
+{
+  @using (Html.BeginForm())
+  {
+    <input type="submit" value="Return Copy" class="btn btn-primary btn-lg" />
+  }
+}
+
 <p>@Html.ActionLink("Add Patron", "AddUser", new {id = Model.CopyId})</p>
 <p>@Html.ActionLink("Back to All Copies", "Index")</p>
 <p>@Html.ActionLink("Edit Copy Information", "Edit", new {id = Model.CopyId})</p>
