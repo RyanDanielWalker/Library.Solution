@@ -67,6 +67,24 @@ namespace Library.Models
           .Include(book => book.AuthorBookJoinEntities)
           .ThenInclude(join => join.Author)
           .FirstOrDefault(book => book.BookId == id);
+
+      var bookCopies = thisBook.Copies;
+      var numberAvailable = 0;
+      foreach (Copy copy in bookCopies)
+      {
+        if (!copy.IsCheckedOut)
+        {
+          numberAvailable++;
+        }
+      }
+      if (numberAvailable == 0)
+      {
+        ViewBag.AreCopiesAvailable = false;
+      }
+      else
+      {
+        ViewBag.AreCopiesAvailable = true;
+      }
       return View(thisBook);
     }
     public ActionResult Edit(int id)

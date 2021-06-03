@@ -26,13 +26,26 @@ else
 
   </ul>
 }
-<h4>Copies available for this book</h4>
-<ul>
+<h4>Total Copies: @Model.Copies.Count</h4>
+<h5>Copies available:</h5>
+@if (!@ViewBag.AreCopiesAvailable)
+{
+  <p><em>There are no copies available at this time.</em></p>
+
+}
+else
+{
+  <ul>
   @foreach (var copy in Model.Copies)
-  {
-    <li>@Html.ActionLink($"{copy.Book.Title}", "Details", "Copies", new {id = copy.CopyId}) | @copy.IsCheckedOut</li>
-  }
-</ul>
+    {
+      @if (!@copy.IsCheckedOut)
+      {
+        <li>@Html.ActionLink($"{copy.Book.Title}", "Details", "Copies", new {id = copy.CopyId})</li>
+      }
+    }
+
+  </ul>
+}
 
 <p>@Html.ActionLink("Add Author", "AddAuthor", new {id = Model.BookId})</p>
 <p>@Html.ActionLink("Back to All Books", "Index")</p>
