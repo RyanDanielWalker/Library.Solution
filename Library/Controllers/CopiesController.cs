@@ -22,12 +22,15 @@ namespace Library.Models
       _userManager = userManager;
       _db = db;
     }
-    [AllowAnonymous]
+    // [AllowAnonymous]
     public async Task<ActionResult> Index()
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userCopies = _db.Copies.Where(entry => entry.User.Id == currentUser.Id).ToList();
+      var userCopies = _db.Copies
+        .Include(entry => entry.CopyPatronJoinEntities)
+        .Where(entry => entry.User.Id == currentUser.Id)
+        .ToList();
       return View(userCopies);
       // var allCopies = _db.Copies.Include(copy => copy.User).ToList();
       // return View(allCopies);
@@ -93,14 +96,16 @@ namespace Library.Models
     }
 
     [HttpPost]
-    public async Task<ActionResult> AddUser(Copy copy, string UserId)
+    public async Task<ActionResult> AddUser(Copy copy, string UserId, DateTime dateCheckedOut)
     {
       var selectedUser = await _userManager.FindByIdAsync(UserId);
       copy.User = selectedUser;
+      copy.IsCheckedOut = true;
       if (UserId != null)
       {
-        _db.CopyPatron.Add(new CopyPatron() { CopyId = copy.CopyId, PatronId = UserId });
+        _db.CopyPatron.Add(new CopyPatron() { CopyId = copy.CopyId, PatronId = UserId, CheckoutDate = dateCheckedOut, DueDate = dateCheckedOut.AddDays(10) });
       }
+      _db.Entry(copy).State = EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

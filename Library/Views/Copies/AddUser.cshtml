@@ -3,15 +3,24 @@
 }
 
 @model Library.Models.Copy
+@using Library.Models
 
 <h1>Add User to @Model.Book.Title Copy</h1>
 
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.CopyId)
+  @Html.HiddenFor(model => model.BookId)
+  @Html.HiddenFor(model => model.Condition)
+  @Html.HiddenFor(model => model.IsCheckedOut)
 
   @Html.Label("Select Patron")
   @Html.DropDownList("UserId")
+
+  @Html.Label("Date Checked Out")
+  @Html.TextBox("dateCheckedOut", "{0:MM/dd/yyyy}" ,new {type="date", required="required"})
+
+
 
   <input type="submit" value="Add Patron" />
 }

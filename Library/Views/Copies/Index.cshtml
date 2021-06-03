@@ -14,7 +14,11 @@
 
 @foreach (Copy copy in Model)
 {
-  <li>@Html.ActionLink($"{copy.Book.Title}", "Details", new {id = copy.CopyId})</li>
+  <li>
+  @Html.ActionLink($"{copy.Book.Title}", "Details", new {id = copy.CopyId})
+  <li>Checked Out: @copy.CopyPatronJoinEntities.ElementAt(copy.CopyPatronJoinEntities.Count - 1).CheckoutDate.ToString("MMM dd, yyyy")</li>
+  <li>Due By: @copy.CopyPatronJoinEntities.ElementAt(copy.CopyPatronJoinEntities.Count - 1).DueDate.ToString("MMM dd, yyyy")</li>
+</li>
 }
 
 <p>@Html.ActionLink("Add new copy", "Create")</p>
